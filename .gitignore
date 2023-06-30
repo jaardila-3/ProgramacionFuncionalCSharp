@@ -1,0 +1,52 @@
+# .NET Core
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+bin/
+obj/
+
+## Other files and folders
+*.suo
+*.user
+*.vscode/
+*.vs/
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+
+# Visual Studio files
+*.userprefs
+*.usertasks
+*.user
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# .NET Core Files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/Properties/launchSettings.json
+
+# StyleCop
+StyleCopReport.xml
+
+# Resharper and Rider generated files
+_resharper*
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Build results of a Xamarin.Android project
+[Dd]roid/[Bb]in/
+[Dd]roid/[Oo]bj/
+
+# Build Results of Xamarin.iOS projects
+[Ii]os/[Bb]in/
+[Ii]os/[Oo]bj/
+
+# NuGet Packages Directory
+*/packages/*
