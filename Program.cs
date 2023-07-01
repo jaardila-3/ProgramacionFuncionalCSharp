@@ -3,6 +3,7 @@ using ProgramacionFuncionalCSharp.Lambdas;
 using ProgramacionFuncionalCSharp.CallBacks;
 using ProgramacionFuncionalCSharp.Linq;
 using ProgramacionFuncionalCSharp.CursoCSharp;
+using ProgramacionFuncionalCSharp.Queries;
 
 // const int numberOne = 10, numberTwo = 20;
 
@@ -39,3 +40,8 @@ using ProgramacionFuncionalCSharp.CursoCSharp;
 // Console.WriteLine("\nstart Tuplas!");
 // Tuplas.MethodTuplas();
 // Console.WriteLine("end Tuplas! \n");
+
+Console.WriteLine("\nstart Queries!");
+Query.MethodOrdenamiento();
+Query.Method_IN_SQL();
+Console.WriteLine("end Queries! \n");
