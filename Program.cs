@@ -44,4 +44,6 @@ using ProgramacionFuncionalCSharp.Queries;
 Console.WriteLine("\nstart Queries!");
 Query.MethodOrdenamiento();
 Query.Method_IN_SQL();
+Query.MethodLetVariableInLinq();
+Query.MethodLeftJoin();
 Console.WriteLine("end Queries! \n");

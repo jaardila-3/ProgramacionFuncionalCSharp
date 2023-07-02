@@ -3,17 +3,17 @@ namespace ProgramacionFuncionalCSharp.Queries
 {
     public class User
     {
-        public int id;
-        public string username;
-        public int age;
-        public string gender;
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
 
         public User(int id, string username, int age, string gender)
         {
-            this.id = id;
-            this.username = username;
-            this.age = age;
-            this.gender = gender;
+            this.Id = id;
+            this.Username = username;
+            this.Age = age;
+            this.Gender = gender;
         }
 
         public static List<User> Users()
