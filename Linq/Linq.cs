@@ -67,6 +67,24 @@ namespace ProgramacionFuncionalCSharp.Linq
             Console.WriteLine(result);
         }
 
+        public static void MethodLinqDistinct()
+        {
+            Console.WriteLine(">>>obtener las calificaciones que son diferentes<<<");
+            Console.WriteLine("Declarativo");
+            var result = calificaciones.Distinct().OrderBy(c => c);
+            foreach (var item in result)
+                Console.WriteLine(item);
+        }
+
+        public static void MethodLinqCount()
+        {
+            Console.WriteLine(">>>obtener cuantas calificaciones hay y cuantas son mayores a 5<<<");
+            Console.WriteLine("Declarativo");
+            var totalCalificaciones = calificaciones.Count();
+            var mayorQueCinco = calificaciones.Count(c => c > 5);
+            Console.WriteLine($" Hay {totalCalificaciones} y {mayorQueCinco} son mayor a 5");
+        }
+
         public static void MethodLinqOrderBy()
         {
             Console.WriteLine(">>>ordenar calificaciones<<<");
@@ -109,6 +127,9 @@ namespace ProgramacionFuncionalCSharp.Linq
 
             bool existEleven = calificaciones.Any(c => c == 11);
             Console.WriteLine($"¿existe el 11?: {existEleven}");
+
+            bool todosSonMayorQueSeis = calificaciones.All(c => c > 6);
+            Console.WriteLine($"¿todos son mayor que seis?: {todosSonMayorQueSeis}");
         }
 
         public static void MethodsLinqFindElementsAndReturnElements()
@@ -128,6 +149,42 @@ namespace ProgramacionFuncionalCSharp.Linq
             //devuelve el primer elemento que coincida o exepción si no hay coincidencias
             int result3 = calificaciones.First(c => c == 3);
             Console.WriteLine($"retorna el: {result3}");
+        }
+
+        public static void MethodLinqMathematical()
+        {
+            Console.WriteLine(">>>Realizar algunas operaciones matemáticas con las calificaciones<<<");
+            Console.WriteLine("Declarativo");
+            List<int> calificaciones = new() { 1, 9, 3, 3, 9, 5, 6, 7, 8, 2, 4, 10 };
+
+            double average = calificaciones.Average();
+            int max = calificaciones.Max();
+            int min = calificaciones.Min();
+            int sum = calificaciones.Sum();
+
+            Console.WriteLine($"Promedio: {average}");
+            Console.WriteLine($"Máximo: {max}");
+            Console.WriteLine($"Mínimo: {min}");
+            Console.WriteLine($"Suma: {sum}");
+        }
+
+        public static void MethodLinqPartitionAndPagination()
+        {
+            Console.WriteLine("Declarativo");
+
+            // Ejemplo con Take
+            Console.WriteLine("Retorna las primeras 3 calificaciones");
+            var primerosTres = calificaciones.Take(3);
+            Console.WriteLine("Los primeros tres elementos de la lista son:");
+            foreach (var calificacion in primerosTres)
+                Console.WriteLine(calificacion);
+
+            // Ejemplo con Skip
+            Console.WriteLine("Retorna sin las primeras 3 calificaciones");
+            var sinPrimerosTres = calificaciones.Skip(3);
+            Console.WriteLine("La lista sin los primeros tres elementos es:");
+            foreach (var calificacion in sinPrimerosTres)
+                Console.WriteLine(calificacion);
         }
     }
 }
