@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ProgramacionFuncionalCSharp.Lambdas;
-using ProgramacionFuncionalCSharp.CallBacks;
-using ProgramacionFuncionalCSharp.Linq;
+using ProgramacionFuncionalCSharp.DelegateOrCallBacks;
+using ProgramacionFuncionalCSharp.Linq_Imperative_vs_Declarative;
 using ProgramacionFuncionalCSharp.CursoCSharp;
-using ProgramacionFuncionalCSharp.Queries;
+using ProgramacionFuncionalCSharp.ExercicesWithLinq;
 
 // const int numberOne = 10, numberTwo = 20;
 
@@ -38,7 +38,7 @@ using ProgramacionFuncionalCSharp.Queries;
 // Linq.MethodLinqForEach();
 // Linq.MethodsLinqFindElementsAndReturnBool();
 // Linq.MethodsLinqFindElementsAndReturnElements();
-Linq.MethodLinqPartitionAndPagination();
+//Linq.MethodLinqPartitionAndPagination();
 // Console.WriteLine("end LINQ! \n");
 
 // Console.WriteLine("\nstart Tuplas!");
@@ -49,7 +49,10 @@ Linq.MethodLinqPartitionAndPagination();
 // Query.MethodOrdenamiento();
 // Query.Method_IN_SQL();
 // Query.MethodLetVariableInLinq();
+//  Query.MethodStartsWith();
+//  Query.Method_MaxBy_MinBy();
+ Query.MethodToLookUp();
+ Query.MethodGroupBy();
 // Query.MethodJoin();
-// Query.MethodGroupBy();
 //Query.MethodLeftJoin();
 //Console.WriteLine("end Queries! \n");

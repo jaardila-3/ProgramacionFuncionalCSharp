@@ -1,5 +1,5 @@
 
-namespace ProgramacionFuncionalCSharp.Queries
+namespace ProgramacionFuncionalCSharp.ExercicesWithLinq
 {
     public class Task
     {

@@ -1,7 +1,7 @@
 
 using System.Linq;
 
-namespace ProgramacionFuncionalCSharp.Linq
+namespace ProgramacionFuncionalCSharp.Linq_Imperative_vs_Declarative
 {
     public class Linq
     {
@@ -80,7 +80,8 @@ namespace ProgramacionFuncionalCSharp.Linq
         {
             Console.WriteLine(">>>obtener cuantas calificaciones hay y cuantas son mayores a 5<<<");
             Console.WriteLine("Declarativo");
-            var totalCalificaciones = calificaciones.Count();
+            //LongCount() se usa cuando el resultado es un número demasiado grande.
+            var totalCalificaciones = calificaciones.LongCount();
             var mayorQueCinco = calificaciones.Count(c => c > 5);
             Console.WriteLine($" Hay {totalCalificaciones} y {mayorQueCinco} son mayor a 5");
         }

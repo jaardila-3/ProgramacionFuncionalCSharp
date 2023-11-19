@@ -1,6 +1,6 @@
 
 
-namespace ProgramacionFuncionalCSharp.CallBacks
+namespace ProgramacionFuncionalCSharp.DelegateOrCallBacks
 {
     //simularemos un cajero electrónico
     public class Delegado
