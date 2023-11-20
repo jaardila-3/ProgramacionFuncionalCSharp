@@ -5,12 +5,11 @@ namespace ProgramacionFuncionalCSharp.LINQ
     {
         #region variables
         private static readonly List<int> calificaciones = new() { 1, 9, 3, 3, 9, 5, 6, 7, 8, 2, 4, 10 };
-        private static readonly List<object> calificacionesMixted = new() { "1", "3", "6", 7, 8, 2, 4, 10 };
         private readonly static List<User> users = User.Users();
         private readonly static List<Task> tasks = Task.Tasks();
         #endregion
 
-        #region Filtrado
+        #region Filtrado y busqueda de elementos
         //Filter --> Where
         public static void Where()
         {
@@ -21,9 +20,8 @@ namespace ProgramacionFuncionalCSharp.LINQ
                 if (item > 8) Console.WriteLine(item);
 
             Console.WriteLine("Declarativo");
-            var result1 = calificaciones.Where(c => c > 8);
-            foreach (var item in result1)
-                Console.WriteLine(item);
+            calificaciones.Where(c => c > 8).ToList()
+            .ForEach(item => Console.WriteLine(item));
 
             ///////////////////////////////////
             Console.WriteLine(">>>obtener la cantidad de calificaciones mayores a 8<<<");
@@ -55,51 +53,117 @@ namespace ProgramacionFuncionalCSharp.LINQ
             .ForEach(cuadrado => Console.WriteLine(cuadrado));
         }
 
-        //TODO: implement OfType method with calificacionesMixted
         public static void OfType()
         {
-            Console.WriteLine(">>>obtener calificaciones de tipo string <<<");
+            //OfType: Filtra los elementos de IEnumerable en función de un tipo especificado.
 
+            //La capacidad inicial de 4 elementos solo afecta el rendimiento y la eficiencia de la lista
+            // en términos de asignación de memoria. No impone una restricción estricta en la cantidad 
+            // de elementos que puedes agregar a la lista.
+            System.Collections.ArrayList fruits = new(4)
+            {
+                "Mango",
+                "Orange",
+                "Apple",
+                3.0,
+                "Banana"
+            };
+
+            // Apply OfType() to the ArrayList.
+            IEnumerable<string> query1 = fruits.OfType<string>();
+
+            Console.WriteLine("Elements of type 'string' are:");
+            foreach (string fruit in query1)
+            {
+                Console.WriteLine(fruit);
+            }
+            // Elements of type 'string' are:
+            // Mango
+            // Orange
+            // Apple
+            // Banana
+
+            // Where() can be applied to the ArrayList type after calling OfType().
+            IEnumerable<string> query2 = fruits.OfType<string>()
+            .Where(fruit => fruit.ToLower().Contains('n'));
+
+            Console.WriteLine("\nThe following strings contain 'n':");
+            foreach (string fruit in query2)
+            {
+                Console.WriteLine(fruit);
+            }
+
+            // The following strings contain 'n':
+            // Mango
+            // Orange
+            // Banana
         }
 
-        public static void Find_Single_First_ReturnElements()
+        public static void Find()
         {
             Console.WriteLine(">>>Encontrar elementos<<<");
-
-            Console.WriteLine("Declarativo");
 
             //si no existe el elemento retorna el valor por defecto del tipo de dato esperado
             int result = calificaciones.Find(c => c == 3);
             Console.WriteLine($"retorna el: {result}");
-
-            //si no existe el elemento o hay mas de una coincidencia retorna una excepción
-            int result2 = calificaciones.Single(c => c == 4);
-            Console.WriteLine($"retorna el: {result2}");
-
-            //devuelve el primer elemento que coincida o exepción si no hay coincidencias
-            int result3 = calificaciones.First(c => c == 3);
-            Console.WriteLine($"retorna el: {result3}");
         }
-        
-        //TODO: implement
+
+        public static void Single()
+        {
+            Console.WriteLine(">>>Encontrar elementos<<<");
+            //si no existe el elemento o hay mas de una coincidencia retorna una excepción
+            int result1 = calificaciones.Single(c => c == 4);
+            //si no existe el elemento o hay mas de una coincidencia retorna  el valor predeterminado
+            int result2 = calificaciones.SingleOrDefault(c => c == 5);
+            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+        }
+
+        public static void First()
+        {
+            Console.WriteLine(">>>obtener el primer elemento<<<");
+            //devuelve el primer elemento que coincida o exepción si no hay coincidencias
+            int result1 = calificaciones.First(c => c == 1);
+            //devuelve el primer elemento que coincida o  el valor predeterminado si no hay coincidencias
+            int result2 = calificaciones.FirstOrDefault(c => c == 1);
+            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+        }
+
         public static void Last()
         {
-            Console.WriteLine(">>>obtener<<<");
+            Console.WriteLine(">>>obtener el último elemento<<<");
+            //devuelve el último elemento que coincida o exepción si no hay coincidencias
+            int result1 = calificaciones.Last(c => c == 10);
+            //devuelve el último elemento que coincida o  el valor predeterminado si no hay coincidencias
+            int result2 = calificaciones.LastOrDefault(c => c == 10);
+            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
 
         }
 
-        //TODO: implement
         public static void ElementAt()
         {
-            Console.WriteLine(">>>obtener<<<");
+            Console.WriteLine(">>>obtener el elemento en una posicion<<<");
+
+            //devuelve el elemento en la posicion indicada
+            int result1 = calificaciones.ElementAt(3);
+            //devuelve el elemento en la posicion indicada o  el valor predeterminado si no hay coincidencias
+            int result2 = calificaciones.ElementAtOrDefault(3);
+            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
 
         }
 
-        //TODO: implement
         public static void DefaultIfEmpty()
         {
-            Console.WriteLine(">>>obtener<<<");
-
+            Console.WriteLine(">>>obtener el valor por defecto si no hay coincidencias<<<");
+            List<int> numbers = new List<int>();
+            //muestra los elementos de la lista y si la lista esta vacia muestra el valor por defecto
+            foreach (int number in numbers.DefaultIfEmpty())
+            {
+                Console.WriteLine(number);
+            }
+            /*
+             This code produces the following output:
+             0
+            */
         }
 
         #endregion
@@ -121,10 +185,34 @@ namespace ProgramacionFuncionalCSharp.LINQ
 
         }
 
-        //TODO: implement
         public static void SelectMany()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //SelectMany en LINQ se utiliza para realizar una proyección y aplanar secuencias anidadas.
+            //Es útil cuando tienes una colección de colecciones y deseas combinar esas colecciones.
+            var AllRols = users.SelectMany(u => u.Rols);
+            foreach (var rol in AllRols)
+            {
+                Console.WriteLine(rol);
+            }
+            //AllRols tiene todos los roles, incluso los repetidos.
+
+            //Tambien sirve para hacer filtros de esas colecciones
+            Console.WriteLine("Encontrar los usuarios con roles de Developer");
+            var developers = users
+            .SelectMany(user => user.Rols, (usuario, rol) => new { usuario, rol })
+            .Where(user => user.rol.StartsWith("Developer"))
+            .Select(user =>
+                new
+                {
+                    Name = user.usuario.Username,
+                    Rol = user.rol
+                }
+            );
+            // Print the results.
+            foreach (var obj in developers)
+            {
+                Console.WriteLine(obj);
+            }
 
         }
 
@@ -134,20 +222,14 @@ namespace ProgramacionFuncionalCSharp.LINQ
         public static void OrderBy()
         {
             Console.WriteLine(">>>ordenar calificaciones<<<");
-            Console.WriteLine("Declarativo");
-            Console.WriteLine("Asc");
+            Console.WriteLine("Ascendenete con OrderBy");
             var result = calificaciones.OrderBy(c => c);
             foreach (var item in result)
                 Console.WriteLine(item);
 
-            Console.WriteLine("Des with -");
+            Console.WriteLine("Descendente con OrderBy utilizabdo (-)");
             var result2 = calificaciones.OrderBy(c => -c);
             foreach (var item in result2)
-                Console.WriteLine(item);
-
-            Console.WriteLine("Des with OrderByDescending");
-            var result3 = calificaciones.OrderByDescending(c => c);
-            foreach (var item in result3)
                 Console.WriteLine(item);
         }
 
@@ -160,6 +242,12 @@ namespace ProgramacionFuncionalCSharp.LINQ
             .OrderByDescending(u => u.Username).Select(u => u.Username)
             .ToList()
             .ForEach(username => Console.WriteLine(username));
+            Console.WriteLine();
+
+            Console.WriteLine("calificaciones with OrderByDescending");
+            var result3 = calificaciones.OrderByDescending(c => c);
+            foreach (var item in result3)
+                Console.WriteLine(item);
         }
 
         //TODO: implement
@@ -504,7 +592,7 @@ namespace ProgramacionFuncionalCSharp.LINQ
             };
             Console.WriteLine();
         }
-        
+
         //TODO: implement
         public static void ToArray()
         {
