@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ProgramacionFuncionalCSharp.Lambdas;
 using ProgramacionFuncionalCSharp.DelegateOrCallBacks;
-using ProgramacionFuncionalCSharp.Linq_Imperative_vs_Declarative;
 using ProgramacionFuncionalCSharp.CursoCSharp;
-using ProgramacionFuncionalCSharp.ExercicesWithLinq;
+using ProgramacionFuncionalCSharp.LINQ;
+using ProgramacionFuncionalCSharp.Strings;
 
 // const int numberOne = 10, numberTwo = 20;
 
@@ -27,32 +27,32 @@ using ProgramacionFuncionalCSharp.ExercicesWithLinq;
 // Delegado.EjecutarOperacion(depositoInteres, 202, 500);
 // Console.WriteLine("end delegados! \n");
 
-// Console.WriteLine("\nstart LINQ!");
-// Linq.MethodLinqWhere();
-// Linq.MethodLinqSelect();
-// Linq.MethodLinqAggregate();
-// Linq.MethodLinqDistinct();
-// Linq.MethodLinqCount();
-// Linq.MethodLinqMathematical();
-// Linq.MethodLinqOrderBy();
-// Linq.MethodLinqForEach();
-// Linq.MethodsLinqFindElementsAndReturnBool();
-// Linq.MethodsLinqFindElementsAndReturnElements();
-//Linq.MethodLinqPartitionAndPagination();
-// Console.WriteLine("end LINQ! \n");
+Console.WriteLine("\nstart LINQ!");
+LinqMethods.Where();
+LinqMethods.Select();
+LinqMethods.Aggregate();
+LinqMethods.Distinct();
+LinqMethods.Count();
+LinqMethods.Average_Max_Min_Sum();
+LinqMethods.OrderBy();
+LinqMethods.ToList();
+LinqMethods.Contains_Any_All_ReturnBool();
+LinqMethods.Find_Single_First_ReturnElements();
+LinqMethods.Take_Skip();
+LinqMethods.OrderByDescending();
+LinqMethods.Contains();
+LinqMethods.WhereWithLet();
+LinqMethods.MaxBy_MinBy();
+LinqMethods.ToLookUp();
+LinqMethods.GroupBy();
+LinqMethods.Join();
+LinqMethods.LeftJoin();
+Console.WriteLine("end LINQ! \n");
 
 // Console.WriteLine("\nstart Tuplas!");
 // Tuplas.MethodTuplas();
 // Console.WriteLine("end Tuplas! \n");
 
-//Console.WriteLine("\nstart Queries!");
-// Query.MethodOrdenamiento();
-// Query.Method_IN_SQL();
-// Query.MethodLetVariableInLinq();
-//  Query.MethodStartsWith();
-//  Query.Method_MaxBy_MinBy();
- Query.MethodToLookUp();
- Query.MethodGroupBy();
-// Query.MethodJoin();
-//Query.MethodLeftJoin();
-//Console.WriteLine("end Queries! \n");
+Console.WriteLine("\nstart string methods!");
+StringMethods.StartsWith();
+Console.WriteLine("end Queries! \n");
