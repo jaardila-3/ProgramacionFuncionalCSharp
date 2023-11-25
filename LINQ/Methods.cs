@@ -250,24 +250,54 @@ namespace ProgramacionFuncionalCSharp.LINQ
                 Console.WriteLine(item);
         }
 
-        //TODO: implement
         public static void ThenBy()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Realiza una clasificación posterior de los elementos de una secuencia 
+            //en orden ascendentes con arreglo a una clave.
+            //despues de OrderBy se usa ThenBy para realizar la clasificación posterior.
+            Console.WriteLine(">>>ordenar usuarios por edad y despues por nombre caundo la edad es igual<<<");
+            var usersByAge = users
+            .OrderBy(u => u.Age)
+            .ThenBy(u => u.Username);
+
+            foreach (var user in usersByAge)
+            {
+                Console.WriteLine($"Id: {user.Id}, Username: {user.Username}, Age: {user.Age}");
+            }
 
         }
 
-        //TODO: implement
         public static void ThenByDescending()
         {
-            Console.WriteLine(">>>obtener<<<");
-
+            //Realiza una clasificación posterior de los elementos de una secuencia en orden descendente.
+            Console.WriteLine(">>>ordenar usuarios por edad y despues por nombre descendentemente caundo la edad es igual<<<");
+            var usersByAge = users
+            .OrderBy(u => u.Age)
+            .ThenByDescending(u => u.Username);
+            foreach (var user in usersByAge)
+            {
+                Console.WriteLine($"Id: {user.Id}, Username: {user.Username}, Age: {user.Age}");
+            }
         }
 
-        //TODO: implement
         public static void Reverse()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Invierte el orden de los elementos de una secuencia.
+            Console.WriteLine(">>>Invierte el orden de la secuencia<<<");
+            char[] apple = { 'a', 'p', 'p', 'l', 'e' };
+            char[] reversed = apple.Reverse().ToArray();
+
+            foreach (char chr in reversed)
+            {
+                Console.Write(chr + " ");
+            }
+            Console.WriteLine();
+
+            /*
+             This code produces the following output:
+
+             e l p p a
+            */
 
         }
         #endregion
@@ -303,13 +333,6 @@ namespace ProgramacionFuncionalCSharp.LINQ
             .ForEach(userTask => Console.WriteLine($"{userTask.Usuario}: {userTask.Cantidad} tareas"));
         }
 
-        //TODO: implement
-        public static void GroupJoin()
-        {
-            Console.WriteLine(">>>obtener<<<");
-
-        }
-
         #endregion
 
         #region Unión y Conjuntos
@@ -333,6 +356,35 @@ namespace ProgramacionFuncionalCSharp.LINQ
                 (user, task) => new { Usuario = user.Username, Tarea = task.Title })
             .ToList()
             .ForEach(userTask => Console.WriteLine($"{userTask.Usuario}: {userTask.Tarea}"));
+        }
+
+        public static void GroupJoin()
+        {
+            // a diferencia de Join, GroupJoin agrupa los resultados en una secuencia anidada. 
+            // Cada elemento de la secuencia original tiene una colección de elementos de la segunda secuencia 
+            //que cumplen con la condición de igualdad.
+            Console.WriteLine("Obtener el username de los usuarios y las tareas asignadas");
+
+            var query = users.GroupJoin(tasks,
+                                       user => user.Id,
+                                       task => task.UserId,
+                                       (user, taskCollection) =>
+                                           new
+                                           {
+                                               // guarda el username
+                                               UserName = user.Username,
+                                               // guarda la lista de tareas asociadas al usuario
+                                               Tasks = taskCollection.Select(task => task.Title)
+                                           });
+
+            foreach (var userTaskGroup in query)
+            {
+                Console.WriteLine($"{userTaskGroup.UserName}:");
+                foreach (var task in userTaskGroup.Tasks)
+                {
+                    Console.WriteLine($"  {task}");
+                }
+            }
         }
 
         public static void LeftJoin()
