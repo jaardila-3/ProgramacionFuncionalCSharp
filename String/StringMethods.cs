@@ -1,4 +1,4 @@
-namespace ProgramacionFuncionalCSharp.Strings
+namespace ProgramacionFuncionalCSharp.String
 {
     public class StringMethods
     {
@@ -18,6 +18,11 @@ namespace ProgramacionFuncionalCSharp.Strings
         {
             Console.WriteLine(">>>obtener<<<");
 
+        }
+
+        public static void Compare()
+        {
+            
         }
     }
 }

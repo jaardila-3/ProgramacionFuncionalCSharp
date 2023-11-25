@@ -1,4 +1,6 @@
 
+using System.Collections;
+
 namespace ProgramacionFuncionalCSharp.LINQ
 {
     public class LinqMethods
@@ -112,31 +114,48 @@ namespace ProgramacionFuncionalCSharp.LINQ
         {
             Console.WriteLine(">>>Encontrar elementos<<<");
             //si no existe el elemento o hay mas de una coincidencia retorna una excepción
-            int result1 = calificaciones.Single(c => c == 4);
+            int result = calificaciones.Single(c => c == 4);
+            Console.WriteLine($"retorna result: {result}");
+        }
+
+        public static void SingleOrDefault()
+        {
+            Console.WriteLine(">>>Encontrar elementos<<<");
             //si no existe el elemento o hay mas de una coincidencia retorna  el valor predeterminado
-            int result2 = calificaciones.SingleOrDefault(c => c == 5);
-            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+            int result = calificaciones.SingleOrDefault(c => c == 5);
+            Console.WriteLine($"retorna result: {result}");
         }
 
         public static void First()
         {
             Console.WriteLine(">>>obtener el primer elemento<<<");
             //devuelve el primer elemento que coincida o exepción si no hay coincidencias
-            int result1 = calificaciones.First(c => c == 1);
+            int result = calificaciones.First(c => c == 1);
+            Console.WriteLine($"retorna result: {result}");
+        }
+
+        public static void FirstOrDefault()
+        {
+            Console.WriteLine(">>>obtener el primer elemento<<<");
             //devuelve el primer elemento que coincida o  el valor predeterminado si no hay coincidencias
-            int result2 = calificaciones.FirstOrDefault(c => c == 1);
-            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+            int result = calificaciones.FirstOrDefault(c => c == 1);
+            Console.WriteLine($"retorna result: {result}");
         }
 
         public static void Last()
         {
             Console.WriteLine(">>>obtener el último elemento<<<");
             //devuelve el último elemento que coincida o exepción si no hay coincidencias
-            int result1 = calificaciones.Last(c => c == 10);
-            //devuelve el último elemento que coincida o  el valor predeterminado si no hay coincidencias
-            int result2 = calificaciones.LastOrDefault(c => c == 10);
-            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+            int result = calificaciones.Last(c => c == 10);
+            Console.WriteLine($"retorna result: {result}");
+        }
 
+        public static void LastOrDefault()
+        {
+            Console.WriteLine(">>>obtener el último elemento<<<");
+            //devuelve el último elemento que coincida o  el valor predeterminado si no hay coincidencias
+            int result = calificaciones.LastOrDefault(c => c == 10);
+            Console.WriteLine($"retorna result: {result}");
         }
 
         public static void ElementAt()
@@ -335,7 +354,7 @@ namespace ProgramacionFuncionalCSharp.LINQ
 
         #endregion
 
-        #region Unión y Conjuntos
+        #region Conjuntos
         public static void Join()
         {
             Console.WriteLine("Obtener el username de los usuarios y las tareas asignadas");
@@ -419,13 +438,17 @@ namespace ProgramacionFuncionalCSharp.LINQ
 
         public static void Contains()
         {
-            Console.WriteLine("\n>>>>> Linq: sintaxis métodos de extensión");
-            //IN SQL
+            //Retorna siempre un boolean, valida que alguno contenga
+            Console.WriteLine(">>>Encontrar calificación<<<");
+            bool existSeven = calificaciones.Contains(7);
+            Console.WriteLine($"¿existe el 7?: {existSeven}");
+
+            //IN SQL: sepuede usar para encontrar elementos especificos
             Console.WriteLine("obtener los usuarios 5, 6 y 7");
             users.Where(user => new int[] { 5, 6, 7 }.Contains(user.Id))
                 .ToList().ForEach(user => Console.WriteLine(user.Username));
 
-            //NO INT SQL
+            //NOT IN SQL: se puede usar para excluir elementos especificos
             Console.WriteLine("Obtener los usuarios, menos 5, 6 y 7:");
             users.Where(user => !(new int[] { 5, 6, 7 }.Contains(user.Id)))
                 .ToList().ForEach(user => Console.WriteLine(user.Username));
@@ -441,65 +464,105 @@ namespace ProgramacionFuncionalCSharp.LINQ
                 Console.WriteLine(item);
         }
 
-        public static void Contains_Any_All_ReturnBool()
+        public static void Any()
         {
+            //Retorna siempre un boolean, valida que alguno cumpla
             Console.WriteLine(">>>Encontrar calificación<<<");
-
-            Console.WriteLine("Declarativo");
-
-            bool existSeven = calificaciones.Contains(7);
-            Console.WriteLine($"¿existe el 7?: {existSeven}");
 
             bool existEleven = calificaciones.Any(c => c == 11);
             Console.WriteLine($"¿existe el 11?: {existEleven}");
+        }
+
+        public static void All()
+        {
+            //Retorna simepre un boolean, valida que todos cumplan
+            Console.WriteLine(">>>Encontrar calificación<<<");
 
             bool todosSonMayorQueSeis = calificaciones.All(c => c > 6);
             Console.WriteLine($"¿todos son mayor que seis?: {todosSonMayorQueSeis}");
         }
 
-        //TODO: implement
         public static void Union()
         {
-            Console.WriteLine(">>>obtener<<<");
-
+            //Proporciona la unión de conjuntos de dos secuencias, sin repetir elementos
+            Console.WriteLine(">>>unir las secuencias<<<");
+            int[] ints = { 8, 3, 6, 4, 4, 9, 1, 0 };
+            var result = calificaciones.Union(ints);
+            foreach (var item in result)
+                Console.WriteLine(item);
         }
 
-        //TODO: implement
         public static void Concat()
         {
-            Console.WriteLine(">>>obtener<<<");
-
+            //Concatena dos secuencias.
+            Console.WriteLine(">>>concatenar las secuencias<<<");
+            var result = users.Select(u => u.Username).Concat(new string[] { "a", "b", "c" });
+            foreach (var item in result)
+                Console.WriteLine(item);
         }
 
-        //TODO: implement
         public static void Except()
         {
-            Console.WriteLine(">>>obtener<<<");
-
+            //proporciona los miembros del primer conjunto que no aparecen en el segundo conjunto.
+            Console.WriteLine(">>>obtener las calificaciones que no estan en el segundo conjunto<<<");
+            int[] ints = { 8, 3, 6, 4, 4, 9, 1, 0 };
+            var result = calificaciones.Except(ints);
+            foreach (var item in result)
+                Console.WriteLine(item);
         }
 
-        //TODO: implement
         public static void Intersect()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //se usa para devolver los elementos comunes de dos estructuras de datos
+            Console.WriteLine(">>>obtener los elementos comunes o duplicados<<<");
 
+            int[] id1 = { 26, 92, 30, 71 };
+            int[] id2 = { 47, 26, 4, 30 };
+
+            IEnumerable<int> both = id1.Intersect(id2);
+
+            foreach (int id in both)
+                Console.WriteLine(id);
+
+            /*
+             This code produces the following output:
+             26
+             30
+            */
         }
 
+        public static void SequenceEqual()
+        {
+            //El método SequenceEqualByReference devuelve un booleano que verifica si dos secuencias son iguales.
+            //En el caso de objetos y clases, el método determina si las secuencias comparadas contienen referencias a
+            //los mismos objetos. Si son dos listas con el mismo objeto instanciado, retorna true. Sin embargo,
+            //si es una lista con dos objetos instanciados, aunque sean instancias de la misma clase, se consideran
+            //referencias distintas, y el método retorna false.
+            Console.WriteLine(">>>verificar si dos secuencias son iguales<<<");
+
+            int[] sequence1 = { 1, 2, 3, 4, 5 };
+            int[] sequence2 = { 1, 2, 3, 4, 5 };
+            bool areEqual = sequence1.SequenceEqual(sequence2);
+            Console.WriteLine($"Las dos secuencias son iguales: {areEqual}");
+            /*
+             This code produces the following output:
+             Las dos secuencias son iguales: True
+            */
+        }
         #endregion
 
         #region Paginación
-        public static void Take_Skip()
+        public static void Take()
         {
-            Console.WriteLine("Declarativo");
-
-            // Ejemplo con Take
             Console.WriteLine("Retorna las primeras 3 calificaciones");
             var primerosTres = calificaciones.Take(3);
             Console.WriteLine("Los primeros tres elementos de la lista son:");
             foreach (var calificacion in primerosTres)
                 Console.WriteLine(calificacion);
+        }
 
-            // Ejemplo con Skip
+        public static void Skip()
+        {
             Console.WriteLine("Retorna sin las primeras 3 calificaciones");
             var sinPrimerosTres = calificaciones.Skip(3);
             Console.WriteLine("La lista sin los primeros tres elementos es:");
@@ -507,20 +570,72 @@ namespace ProgramacionFuncionalCSharp.LINQ
                 Console.WriteLine(calificacion);
         }
 
-        //TODO: implement
         public static void TakeWhile()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Devuelve los elementos de una secuencia siempre que el valor de una condición especificada
+            // sea true y luego omite los elementos restantes.
 
+            Console.WriteLine(">>>obtener grados mayores o iguales a 80<<<");
+            int[] grades = { 59, 82, 70, 56, 92, 98, 85, 80 };
+
+            IEnumerable<int> highterGrades =
+                grades
+                .OrderByDescending(grade => grade)
+                .TakeWhile(grade => grade >= 80);
+
+            Console.WriteLine("All grades above or equals to 80:");
+            foreach (int grade in highterGrades)
+            {
+                Console.WriteLine(grade);
+            }
         }
 
-        //TODO: implement
         public static void SkipWhile()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Omite los elementos de una secuencia en tanto que el valor de una condición especificada
+            // sea true y luego devuelve los elementos restantes.
+            Console.WriteLine(">>>omitir grados mayores o iguales a 80<<<");
+            int[] grades = { 59, 82, 70, 56, 92, 98, 85, 80 };
+
+            IEnumerable<int> lowerGrades =
+                grades
+                .OrderByDescending(grade => grade)
+                .SkipWhile(grade => grade >= 80);
+
+            Console.WriteLine("All grades below 80:");
+            foreach (int grade in lowerGrades)
+            {
+                Console.WriteLine(grade);
+            }
+            /*
+             This code produces the following output:
+             All grades below 80:
+             70
+             59
+             56
+            */
+        }
+
+        public static void TakeLast()
+        {
+            //devuelve los últimos elementos de una secuencia. Este método es útil cuando se desea obtener los últimos elementos de una secuencia.
+            Console.WriteLine(">>>obtener los últimos 3 elementos de la lista<<<");
+            var ultimosTres = calificaciones.OrderBy(key => key).TakeLast(3);
+            Console.WriteLine("Los últimos tres elementos de la lista son:");
+            foreach (var calificacion in ultimosTres)
+                Console.WriteLine(calificacion);
 
         }
 
+        public static void SkipLast()
+        {
+            //omite los último elementos de una secuencia. Este método es útil cuando se desea omitir los último elementos de una secuencia.
+            Console.WriteLine(">>>omitir los último elementos de la lista<<<");
+            var sinUltimosTres = calificaciones.OrderBy(key => key).SkipLast(3);
+            Console.WriteLine("La lista sin los últimos tres elementos es:");
+            foreach (var calificacion in sinUltimosTres)
+                Console.WriteLine(calificacion);
+        }
         #endregion
 
         #region Agregación y reducción
@@ -550,32 +665,51 @@ namespace ProgramacionFuncionalCSharp.LINQ
             Console.WriteLine($" Hay {totalCalificaciones} y {mayorQueCinco} son mayor a 5");
         }
 
-        public static void Average_Max_Min_Sum()
+        public static void Average()
         {
-            Console.WriteLine(">>>Realizar algunas operaciones matemáticas con las calificaciones<<<");
-            Console.WriteLine("Declarativo");
-            List<int> calificaciones = new() { 1, 9, 3, 3, 9, 5, 6, 7, 8, 2, 4, 10 };
-
+            Console.WriteLine(">>>Obtener el promedio<<<");
             double average = calificaciones.Average();
-            int max = calificaciones.Max();
-            int min = calificaciones.Min();
-            int sum = calificaciones.Sum();
-
             Console.WriteLine($"Promedio: {average}");
+        }
+
+        public static void Max()
+        {
+            Console.WriteLine(">>>Obtener el máximo<<<");
+            int max = calificaciones.Max();
             Console.WriteLine($"Máximo: {max}");
+        }
+
+        public static void Min()
+        {
+            Console.WriteLine(">>>Obtener el mínimo<<<");
+            int min = calificaciones.Min();
             Console.WriteLine($"Mínimo: {min}");
+        }
+
+        public static void Sum()
+        {
+            Console.WriteLine(">>>Obtener la suma<<<");
+            int sum = calificaciones.Sum();
             Console.WriteLine($"Suma: {sum}");
         }
 
-        public static void MaxBy_MinBy()
+        public static void MaxBy()
         {
-            //MaxBy y MinBy me devuleve el objeto completo mientras que Max solo devuelve el valor primitivo consultado
-            Console.WriteLine("Obtener la tarea con el mayor y el menor userId");
+            //MaxBy devuleve el objeto completo mientras que Max solo devuelve el valor primitivo consultado
+            Console.WriteLine("Obtener la tarea con el mayor userId");
             var taskWithMaxUserId = tasks.MaxBy(task => task.UserId);
-            var taskWithMinUserId = tasks.MinBy(task => task.UserId);
             //el signo ! me indica que la propiedad es no nullable, es decir siempre viene con datos
             // y en este caso es porque es un archivo que tengo con datos hardcodeados, lo cual nunca es null
             Console.WriteLine($"tarea con mayor userId es la tarea {taskWithMaxUserId!.Id}: {taskWithMaxUserId!.Title}");
+        }
+
+        public static void MinBy()
+        {
+            //MinBy devuleve el objeto completo mientras que Min solo devuelve el valor primitivo consultado
+            Console.WriteLine("Obtener la tarea con el mayor y el menor userId");
+            var taskWithMinUserId = tasks.MinBy(task => task.UserId);
+            //el signo ! me indica que la propiedad es no nullable, es decir siempre viene con datos
+            // y en este caso es porque es un archivo que tengo con datos hardcodeados, lo cual nunca es null
             Console.WriteLine($"tarea con menor userId es la tarea {taskWithMinUserId!.Id}: {taskWithMinUserId!.Title}");
         }
         #endregion
@@ -587,7 +721,6 @@ namespace ProgramacionFuncionalCSharp.LINQ
             Console.WriteLine("Declarativo");
             Console.WriteLine("Asc with method ForEach");
             calificaciones.OrderBy(c => c)
-            //debe ser una lista, si no lo es, la convertimos.
             .ToList()
             .ForEach(item => Console.WriteLine(item));
         }
@@ -645,20 +778,67 @@ namespace ProgramacionFuncionalCSharp.LINQ
             Console.WriteLine();
         }
 
-        //TODO: implement
         public static void ToArray()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Crea una matriz a partir de un IEnumerable<T>.
+            Console.WriteLine(">>>obtener un array con los nombres<<<");
+            string[] usernames = users.Select(user => user.Username).ToArray();
+
+            foreach (string user in usernames)
+            {
+                Console.WriteLine(user);
+            }
 
         }
 
-        //TODO: implement
         public static void ToDictionary()
         {
-            Console.WriteLine(">>>obtener<<<");
+            //Crea un Dictionary<TKey,TValue> a partir de un IEnumerable<T>.
+            Console.WriteLine(">>>obtener los usuarios por id<<<");
+            // Create a Dictionary of User class,
+            // using Id as the key.
+            Dictionary<int, User> dictionary =
+                users.ToDictionary(u => u.Id);
 
+            foreach (KeyValuePair<int, User> user in dictionary)
+            {
+                Console.WriteLine(
+                    "Key {0}: {1}, {2} years",
+                    user.Key,
+                    user.Value.Username,
+                    user.Value.Age);
+            }
         }
 
+        public static void Cast()
+        {
+            //Castea una secuencia de objetos de un tipo a otro, pero todos los elementos de la secuencia deben ser del mismo tipo sino produce una excepción.
+            Console.WriteLine(">>>castear una secuencia de object a string<<<");
+            object[] objs = new object[] { "12345", "12" };
+            var strings1 = objs.Cast<string>().ToArray();
+            foreach (string s in strings1)
+                Console.WriteLine(s);
+
+            try
+            {
+                var integers1 = objs.Cast<int>().ToArray(); //throws InvalidCastException
+            }
+            catch (InvalidCastException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public static void AsEnumerable()
+        {
+            //Crea un IEnumerable<T> a partir de un IEnumerable.
+            Console.WriteLine(">>>obtener un IEnumerable de los nombres de los usuarios<<<");
+            var enumerable = users.Select(user => user.Username);
+            foreach (string user in enumerable)
+            {
+                Console.WriteLine(user);
+            }
+        }
         #endregion
 
     }
