@@ -162,13 +162,17 @@ namespace ProgramacionFuncionalCSharp.LINQ
         public static void ElementAt()
         {
             Console.WriteLine(">>>obtener el elemento en una posicion<<<");
-
             //devuelve el elemento en la posicion indicada
-            int result1 = calificaciones.ElementAt(3);
-            //devuelve el elemento en la posicion indicada o  el valor predeterminado si no hay coincidencias
-            int result2 = calificaciones.ElementAtOrDefault(3);
-            Console.WriteLine($"retorna result1: {result1} result2: {result2}");
+            int result1 = calificaciones.ElementAt(3);           
+            Console.WriteLine($"retorna result1: {result1}");
+        }
 
+        public static void ElementAtOrDefault()
+        {
+            Console.WriteLine(">>>obtener el elemento en una posicion<<<");            
+            //devuelve el elemento en la posicion indicada o  el valor predeterminado si no hay coincidencias
+            int result = calificaciones.ElementAtOrDefault(3);
+            Console.WriteLine($"retorna result1: {result}");
         }
 
         public static void DefaultIfEmpty()
@@ -458,11 +462,26 @@ namespace ProgramacionFuncionalCSharp.LINQ
         public static void Distinct()
         {
             Console.WriteLine(">>>obtener las calificaciones que son diferentes<<<");
-            Console.WriteLine("Declarativo");
             var result = calificaciones.Distinct().OrderBy(c => c);
 
             foreach (var item in result)
                 Console.WriteLine(item);
+        }
+
+        public static void DistinctBy()
+        {
+            //Devuelve elementos distintos de una secuencia según una función de selector de claves especificada.
+            //el selector debe ser una propiedad del objeto y devuelve los primeros registros de la secuencia
+            //que son diferentes y los demas registros los omite 
+            Console.WriteLine(">>>obtener los primeros usuarios que son diferentes en genero<<<");
+            var result = users.DistinctBy(u => u.Gender);
+
+            foreach (var item in result)
+                Console.WriteLine($"ID: {item.Id}, {item.Username} {item.Gender}");
+            /* Resultado
+            ID: 1, user1 Male
+            ID: 2, user2 Female
+            */
         }
 
         public static void Any()
@@ -491,6 +510,37 @@ namespace ProgramacionFuncionalCSharp.LINQ
             var result = calificaciones.Union(ints);
             foreach (var item in result)
                 Console.WriteLine(item);
+        }
+
+        public static void UnionBy()
+        {
+            //Genera la unión de conjunto de dos secuencias según una función de selector de claves especificada.
+            //el selector debe ser una propiedad del objeto
+            Console.WriteLine(">>>unir los dos diccionarios sin repetir la clave<<<");
+            Dictionary<int, string> diccionario1 = new Dictionary<int, string>();
+            diccionario1.Add(1, "Juan");
+            diccionario1.Add(2, "Pedro");
+            diccionario1.Add(3, "Juan");
+            diccionario1.Add(4, "María");
+
+            Dictionary<int, string> diccionario2 = new Dictionary<int, string>();
+            diccionario2.Add(3, "Juan");
+            diccionario2.Add(4, "Pedro");
+            diccionario2.Add(5, "María");
+
+            // Usa UnionBy para unir los dos diccionarios, eliminando los duplicados por la clave
+            var diccionariosUnidos = diccionario1.UnionBy(diccionario2, p => p.Key);
+
+            // Imprime el diccionario unido
+            foreach (KeyValuePair<int, string> par in diccionariosUnidos)
+                Console.WriteLine("{0}: {1}", par.Key, par.Value);
+
+            // Salida:
+            // 1: Juan
+            // 2: Pedro
+            // 3: Juan
+            // 4: María
+            // 5: María
         }
 
         public static void Concat()
@@ -532,6 +582,29 @@ namespace ProgramacionFuncionalCSharp.LINQ
             */
         }
 
+        public static void IntersectBy()
+        {
+            //se usa para devolver los elementos comunes de dos estructuras de datos
+            Console.WriteLine(">>>obtener los usuarios comunes o duplicados<<<");
+            var firstsUsers = users.Take(8);
+            var lastsUsers = users.TakeLast(5);
+            //IntersectBy tiene dos argumentos de tipo genéricos: TSource y TKey
+            //IntersectBy es un método de extensión que se utiliza para encontrar la intersección de dos colecciones. 
+            //En este caso, firstsUsers y lastsUsers son las dos colecciones que se están comparando. 
+            //El tercer parámetro, u => u, es una expresión lambda que se utiliza para especificar la propiedad que se utilizará para comparar los elementos
+            //de las dos colecciones. Por lo tanto, el método IntersectBy devuelve una colección de elementos que son comunes a ambas colecciones.
+            var interesestUsers = firstsUsers.IntersectBy<User, User>(lastsUsers, u => u);
+            Console.WriteLine("los usuarios duplicados son:");
+            foreach (var user in interesestUsers)
+                Console.WriteLine($"{user.Id} - {user.Username}");
+
+            /*Resultado
+            los usuarios duplicados son:
+            7 - user7
+            8 - user8
+            */
+        }
+
         public static void SequenceEqual()
         {
             //El método SequenceEqualByReference devuelve un booleano que verifica si dos secuencias son iguales.
@@ -549,6 +622,37 @@ namespace ProgramacionFuncionalCSharp.LINQ
              This code produces the following output:
              Las dos secuencias son iguales: True
             */
+        }
+
+        public static void Zip()
+        {
+            //Combina dos secuencias utilizando la función de predicado especificada.
+            Console.WriteLine(">>> sumar dos secuencias <<<");
+
+            int[] numbers1 = { 1, 2, 3 };
+            int[] numbers2 = { 10, 20, 30 };
+            var combined = numbers1.Zip(numbers2, (n1, n2) => n1 + n2);
+            foreach (var result in combined)
+                Console.WriteLine(result);
+            /*
+             This code produces the following output:
+             11
+             22
+             33
+            */
+            Console.WriteLine();
+            Console.WriteLine(">>> combinar dos secuencias <<<");
+            int[] numbers = { 1, 2, 3, 4 };
+            string[] words = { "one", "two", "three" };
+
+            var numbersAndWords = numbers.Zip(words, (first, second) => first + ": " + second);
+
+            foreach (var item in numbersAndWords)
+                Console.WriteLine(item);
+            // This code produces the following output:
+            // 1: one
+            // 2: two
+            // 3: three
         }
         #endregion
 
@@ -589,6 +693,26 @@ namespace ProgramacionFuncionalCSharp.LINQ
             {
                 Console.WriteLine(grade);
             }
+            Console.WriteLine();
+
+            //tambien se puede usar con indice
+            Console.WriteLine(">>>obtener las cantidades mayores que el indice multiplicado por mil<<<");
+            int[] amounts = { 5000, 2500, 9000, 8000,
+                    6500, 4000, 1500, 5500 };
+
+            IEnumerable<int> query =
+                amounts.TakeWhile((amount, index) => amount > index * 1000);
+
+            foreach (int amount in query)
+                Console.WriteLine(amount);
+            /*
+             This code produces the following output:
+             5000
+             2500
+             9000
+             8000
+             6500
+            */
         }
 
         public static void SkipWhile()
@@ -615,6 +739,23 @@ namespace ProgramacionFuncionalCSharp.LINQ
              59
              56
             */
+            Console.WriteLine();
+            //tambien se puede usar con indice
+            Console.WriteLine(">>>omitir las cantidades mayores que el indice multiplicado por mil<<<");
+            int[] amounts = { 5000, 2500, 9000, 8000,
+                    6500, 4000, 1500, 5500 };
+
+            IEnumerable<int> query =
+                amounts.SkipWhile((amount, index) => amount > index * 1000);
+
+            foreach (int amount in query)
+                Console.WriteLine(amount);
+            /*
+             This code produces the following output:
+             4000
+             1500
+             5500
+            */
         }
 
         public static void TakeLast()
@@ -636,6 +777,31 @@ namespace ProgramacionFuncionalCSharp.LINQ
             Console.WriteLine("La lista sin los últimos tres elementos es:");
             foreach (var calificacion in sinUltimosTres)
                 Console.WriteLine(calificacion);
+        }
+
+        public static void Range()
+        {
+            //Genera una secuencia de números enteros en un intervalo especificado
+            // Generate a sequence of integers from 1 to 10
+            // and then select their squares.
+            IEnumerable<int> squares = Enumerable.Range(1, 10).Select(x => x * x);
+
+            foreach (int num in squares)
+                Console.WriteLine(num);
+
+            /*
+             This code produces the following output:
+             1
+             4
+             9
+             16
+             25
+             36
+             49
+             64
+             81
+             100
+            */
         }
         #endregion
 
@@ -809,6 +975,29 @@ namespace ProgramacionFuncionalCSharp.LINQ
                     user.Value.Username,
                     user.Value.Age);
             }
+        }
+
+        public static void ToHashSet()
+        {
+            //Crea un HashSet<T> a partir de un IEnumerable<T>.
+            Console.WriteLine(">>>obtener los numeros unicos<<<");
+            List<int> numbers = new List<int> { 1, 2, 3, 3, 4, 5, 5, 6 };
+
+            // Usando ToHashSet para obtener un conjunto único de números
+            HashSet<int> uniqueNumbers = numbers.ToHashSet();
+
+            Console.WriteLine("Lista original:");
+            Console.WriteLine(string.Join(", ", numbers));
+
+            Console.WriteLine("\nConjunto único de números usando ToHashSet:");
+            Console.WriteLine(string.Join(", ", uniqueNumbers));
+
+            /*resultado:
+            Lista original:
+            1, 2, 3, 3, 4, 5, 5, 6
+            Conjunto único de números usando ToHashSet:
+            1, 2, 3, 4, 5, 6
+            */
         }
 
         public static void Cast()
