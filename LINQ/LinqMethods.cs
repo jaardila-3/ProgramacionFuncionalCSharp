@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Data;
 
 namespace ProgramacionFuncionalCSharp.LINQ
 {
@@ -827,17 +828,43 @@ namespace ProgramacionFuncionalCSharp.LINQ
             {
                 Console.WriteLine(ex.Message);
             }
+            Console.WriteLine();
+            Console.WriteLine(">>>castear y obtener solo los usuarios del ArrayList<<<");
+            //Cast sirve para implementar la interfaz IEnumerable<T> en los objetos que no la implementan
+            //por ejemplo ArrayList no implementa IEnumerable<T>, por lo tanto no puede usar metodos LINQ
+            var result = new ArrayList() { "user1", "user2", "rol1" };
+            // Utilizar Cast<T> para convertir ArrayList a IEnumerable<string> y poder usar LINQ
+            var enumerable = result.Cast<string>().Where(s => s.StartsWith("u"));
+            // Mostrar los resultados
+            foreach (var item in enumerable)
+                Console.WriteLine(item);
         }
 
         public static void AsEnumerable()
         {
             //Crea un IEnumerable<T> a partir de un IEnumerable.
-            Console.WriteLine(">>>obtener un IEnumerable de los nombres de los usuarios<<<");
-            var enumerable = users.Select(user => user.Username);
-            foreach (string user in enumerable)
-            {
-                Console.WriteLine(user);
-            }
+            //AsEnumerable es un método de extensión que se utiliza para convertir un objeto DataTable
+            // en un objeto IEnumerable. Esto permite que el objeto DataTable se utilice en una consulta LINQ.
+            Console.WriteLine(">>>seleccionar los nombres de las personas mayores de 30 años<<<");
+            // Create a new DataTable.
+            DataTable table = new();
+            // Add columns to the DataTable.
+            table.Columns.Add("ID", typeof(int));
+            table.Columns.Add("Name", typeof(string));
+            table.Columns.Add("Age", typeof(int));
+            // Add rows to the DataTable.
+            table.Rows.Add(1, "John", 25);
+            table.Rows.Add(2, "Jane", 30);
+            table.Rows.Add(3, "Bob", 35);
+            // Convert the DataTable to an IEnumerable.
+            var names = table.AsEnumerable()
+                             .Where(row => row.Field<int>("Age") > 30)
+                             //con esta instruccion ?? nos aseguramos que no sea null
+                             .Select(row => row.Field<string>("Name") ?? "");
+
+            // Display the results.
+            foreach (string name in names)
+                Console.WriteLine(name);
         }
         #endregion
 

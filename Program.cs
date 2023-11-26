@@ -86,7 +86,8 @@ using ProgramacionFuncionalCSharp.String;
 // LinqMethods.ToLookUp();
 // LinqMethods.ToArray();
 // LinqMethods.ToDictionary();
-LinqMethods.Cast();
+// LinqMethods.Cast();
+LinqMethods.AsEnumerable();
 // Console.WriteLine("end LINQ! \n");
 
 // Console.WriteLine("\nstart Tuplas!");
