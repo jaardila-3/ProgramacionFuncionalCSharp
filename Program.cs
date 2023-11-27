@@ -1,13 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
-using ProgramacionFuncionalCSharp.Lambdas;
+﻿using ProgramacionFuncionalCSharp.Lambdas;
 using ProgramacionFuncionalCSharp.DelegateOrCallBacks;
 using ProgramacionFuncionalCSharp.CursoCSharp;
 using ProgramacionFuncionalCSharp.LINQ;
 using ProgramacionFuncionalCSharp.String;
+using ProgramacionFuncionalCSharp.Object;
+using ProgramacionFuncionalCSharp.Integer;
 
-// const int numberOne = 10, numberTwo = 20;
 
 // Console.WriteLine("\nstart lambdas!");
+// const int numberOne = 10, numberTwo = 20;
 // Console.WriteLine($"¿el número es par?: {Lambda.isPar(numberOne)}");
 // Console.WriteLine($"¿el correo es válido?: {Lambda.IsValidEmail("alexanderardilagmail.com")}");
 // Console.WriteLine($"el resultado de la suma es: {Lambda.sum(numberOne, numberTwo)}");
@@ -101,6 +102,34 @@ using ProgramacionFuncionalCSharp.String;
 // Tuplas.MethodTuplas();
 // Console.WriteLine("end Tuplas! \n");
 
+// Console.WriteLine("\nstart object methods!");
+// ObjectMethods.Equals();
+// ObjectMethods.MethodGetHashCode();
+// ObjectMethods.ToString_();
+// ObjectMethods.GetType_();
+// ObjectMethods.ReferenceEquals();
+// Console.WriteLine("end Queries! \n");
+
 // Console.WriteLine("\nstart string methods!");
 // StringMethods.StartsWith();
+// StringMethods.EndsWith();
+// StringMethods.IsNullOrEmpty();
+// StringMethods.Compare();
+// StringMethods.Concat();
+// StringMethods.Contains();
+// StringMethods.Format();
+// StringMethods.Join();
+// StringMethods.Replace();
+// StringMethods.Substring();
+// StringMethods.Trim();
+// StringMethods.TrimEnd();
+// StringMethods.TrimStart();
+// StringMethods.ToLower();
+// StringMethods.ToUpper();
+// Console.WriteLine("end Queries! \n");
+
+// Console.WriteLine("\nstart integer methods!");
+// IntegerMethods.TryParse();
+// IntegerMethods.Parse();
+// IntegerMethods.CompareTo();
 // Console.WriteLine("end Queries! \n");

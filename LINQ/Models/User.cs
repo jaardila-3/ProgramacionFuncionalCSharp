@@ -1,4 +1,3 @@
-
 namespace ProgramacionFuncionalCSharp.LINQ
 {
     public class User

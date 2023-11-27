@@ -1,4 +1,3 @@
-
 namespace ProgramacionFuncionalCSharp.CursoCSharp
 {
     public class Tuplas

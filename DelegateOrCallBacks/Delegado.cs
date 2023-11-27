@@ -1,5 +1,3 @@
-
-
 namespace ProgramacionFuncionalCSharp.DelegateOrCallBacks
 {
     //simularemos un cajero electrónico

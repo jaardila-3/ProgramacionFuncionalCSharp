@@ -1,4 +1,3 @@
-
 namespace ProgramacionFuncionalCSharp.LINQ
 {
     public class Task
